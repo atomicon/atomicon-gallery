@@ -1,8 +1,5 @@
-<div class="wrap atomicon-gallery">
+<?php include (dirname(__FILE__).'/admin-header.php'); ?>
 
-	<?php screen_icon(); ?>
-	<h2><?php _e( 'Atomicon Gallery', 'atomicon-gallery' ); ?></h2>	
-			
 	<form method="POST">
 	
 	<?php include ('admin-actions.php') ?>
@@ -69,4 +66,4 @@
 		</tbody>
 	</table>
 
-</div><!-- .wrap -->
+<?php include (dirname(__FILE__).'/admin-footer.php'); ?>
