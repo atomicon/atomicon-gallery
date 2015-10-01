@@ -1,7 +1,7 @@
 <div class="wrap atomicon-gallery">
 
 	<?php screen_icon(); ?>
-	<h2><?php _e( 'Atomicon Gallery', 'atomicon-gallery' ); ?> - <?php esc_html_e('Create folder', 'atomicon-gallery') ?></h2>
+	<h2><?php _e( 'Atomicon Gallery', 'atomicon-gallery' ); ?> - <?php _e('Create folder', 'atomicon-gallery') ?></h2>
 
 	<form method="POST">
 
@@ -15,8 +15,8 @@
 		</table>
 
 		<p class="submit">
-			<a href="<?php echo $this->admin_url() ?>" class="button button-secondary" ><?php echo esc_html_e('Cancel', 'atomicon-gallery') ?></a>
-			<button type="submit" name="action" value="create-folder" class="button button-primary" id="submit"><?php esc_attr_e('Create folder', 'atomicon-gallery') ?></button>
+			<a href="<?php echo $this->admin_url() ?>" class="button button-secondary" ><?php echo _e('Cancel', 'atomicon-gallery') ?></a>
+			<button type="submit" name="action" value="create-folder" class="button button-primary" id="submit"><?php _e('Create folder', 'atomicon-gallery') ?></button>
 		</p>
 
 	</form>
