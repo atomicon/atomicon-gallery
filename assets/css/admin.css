@@ -1,0 +1,96 @@
+/*----------------------------
+    The file upload form
+-----------------------------*/
+
+
+#upload{
+    background-color:#fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#drop{
+    background-color: #fff;
+    padding: 40px 50px;
+    border: 20px dashed rgba(0, 0, 0, 0);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#drop a:hover{
+    background-color:#0986a3;
+}
+
+#drop input{
+    display:none;
+}
+
+#upload ul{
+    list-style:none;
+    margin: 0;
+    padding: 0;
+}
+
+#upload ul li{
+    background-color:#fff;
+    border-top:1px solid #eee;
+    border-bottom:1px solid #ccc;
+    padding:15px;
+    height: 52px;
+    position: relative;
+    margin-bottom: 0;
+}
+
+#upload ul li.success {
+	background-color: #efe;
+}
+
+#upload ul li.error {
+	background-color: #fee;
+}
+
+#upload ul li input{
+    display: none;
+}
+
+#upload ul li p{
+    width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 0px;
+    left: 100px;
+}
+
+#upload ul li i{
+    font-weight: normal;
+    font-style:normal;
+    color:#7f7f7f;
+    display:block;
+}
+
+#upload ul li canvas{
+    top: 15px;
+    left: 32px;
+    position: absolute;
+}
+
+#upload ul li span{
+    width: 15px;
+    height: 12px;
+    background: url('../img/icons.png') no-repeat;
+    position: absolute;
+    top: 34px;
+    right: 33px;
+    cursor:pointer;
+}
+
+#upload ul li.working span{
+    height: 16px;
+    background-position: 0 -12px;
+}
+
+#upload ul li.error p{
+    color:red;
+}
