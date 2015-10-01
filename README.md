@@ -1,2 +1,2 @@
 # atomicon-gallery
-the polular atomicon gallery ported to wordpress
+The popular atomicon gallery ported to wordpress
