@@ -208,7 +208,7 @@ class Atomicon_Gallery {
 	 */
 	public function admin_controller() {
 
-		$this->action = str_replace('-', '_', (isset($_REQUEST['action']) ? $_REQUEST['action'] : 'listing'));
+		$this->action = str_replace('-', '_', (isset($_POST['action']) ? $_POST['action'] : 'listing'));
 		$this->folder = isset($_GET['folder']) ? $_GET['folder'] : '';
 
 		if ( ! method_exists($this, 'admin_'.$this->action)) {
@@ -226,7 +226,26 @@ class Atomicon_Gallery {
 	}
 
 	public function admin_delete() {
-		var_dump($this->folder, $_POST, $this->core->all($this->folder));
+		$count = 0;
+		$items = isset($_POST['item']) ? $_POST['item'] : array();
+
+		if (!empty($items)) {
+
+			foreach($items as $item) {
+				$count += $this->core->delete($this->folder, $item);
+			}
+			if ($count > 0) {
+				$this->add_message( sprintf( _n( '%s item deleted', '%s items deleted', $count, 'atomicon-gallery'), $count) );
+			} else {
+				$this->add_message( __('No items deleted', 'atomicon-gallery'), 'error' );
+			}
+
+		} else {
+			$this->add_message( __('No items selected', 'atomicon-gallery'), 'error');
+		}
+
+		$_POST['action'] = 'listing';
+		$this->admin_controller();
 	}
 
 	public function admin_create_folder() {
@@ -237,21 +256,22 @@ class Atomicon_Gallery {
 			$result = $this->core->create_folder($this->folder, $folder_name);
 			switch($result) {
 				case TRUE:
-						$info_messages[] = __('Folder created', 'atomicon-gallery');
+						$this->add_message( __('Folder created', 'atomicon-gallery') );
 						$_POST['action'] = 'listing';
 						$this->admin_controller();
+						return;
 						break;
 				case -1:
-						$error_messages[]  = __('Can not create empty folder', 'atomicon-gallery');
+						$this->add_message( __('Can not create empty folder', 'atomicon-gallery'), 'error');
 						break;
 				case -2:
-						$error_messages[]  = __('Folder already exists', 'atomicon-gallery');
+						$this->add_message( __('Folder already exists', 'atomicon-gallery'), 'error');
 						break;
 				case -3:
-						$error_messages[]  = __('Could not create folder', 'atomicon-gallery');
+						$this->add_message( __('Could not create folder', 'atomicon-gallery'), 'error');
 						break;
 				default:
-						$error_messages[]  = __('Unknown error occurred', 'atomicon-gallery');
+						$this->add_message( __('Unknown error occurred', 'atomicon-gallery'), 'error');
 						break;
 			}
 			if ($result === TRUE) {

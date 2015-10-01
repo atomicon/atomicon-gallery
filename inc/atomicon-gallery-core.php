@@ -11,8 +11,7 @@ class Atomicon_Gallery_Core {
 
 		// check if directory exists, if not create
 		if ( ! is_dir( $this->basedir )) {
-			@mkdir($this->basedir, '0777');
-			@chmod($this->basedir, '0777');
+			@mkdir($this->basedir);
 		}
 	}
 
@@ -61,14 +60,35 @@ class Atomicon_Gallery_Core {
 			return -2; // "Folder already exists";
 		}
 
-		$res = @mkdir($newdir, '0777');
+		$res = @mkdir($newdir);
 		if ($res === FALSE ) {
 			return -3; // "Could not create folder"
 		}
 
-		@chmod($newdir, '0777');
-
 		return TRUE;
+	}
+
+	function delete($folder, $item, $_is_relative = true) {
+		$count = 0;
+		$path = $folder;
+		if ($_is_relative) {
+			$path = $this->real_folder($folder).'/'.$item;
+		}
+		if (is_dir($path)) {
+			$dir = opendir($path);
+			if ($dir !== FALSE) {
+				while(false !== ( $entry = readdir($dir)) ) {
+					if ($entry[0] != '.') {
+						$count += $this->delete($path.'/'.$entry, '', FALSE);
+					}
+				}
+				closedir($dir);
+			}
+			$count += (@rmdir($path) === TRUE) ? 1 : 0;
+		} elseif (is_file($path)) {
+			$count += (@unlink($path) === TRUE) ? 1 : 0;
+		}
+		return $count;
 	}
 
 	function dirlist($folder = '') {
@@ -81,7 +101,7 @@ class Atomicon_Gallery_Core {
 			if ( is_dir($curdir) ) {
 				$this->dirlist[$cache_folder] = array();
 
-				if ($handle = opendir($curdir)) {
+				if ( ($handle = opendir($curdir)) !== FALSE ) {
 					while (false !== ($entry = readdir($handle))) {
 						if ($entry[0] != ".") {
 
@@ -132,9 +152,9 @@ class Atomicon_Gallery_Core {
 							$this->dirlist[$cache_folder][$id] = $item;
 						}
 					}
+					closedir($handle);
 				}
 			}
-			closedir($handle);
 		}
 		return $this->dirlist[$cache_folder];
 	}
